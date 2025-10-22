@@ -1,4 +1,4 @@
-USE [QuanLyNhaHang]
+﻿USE [QuanLyNhaHang]
 GO
 /****** Object:  Table [dbo].[Ban]    Script Date: 10/10/2025 10:57:02 CH ******/
 SET ANSI_NULLS ON
@@ -335,4 +335,39 @@ go
 ALTER TABLE Ban
 ADD TrangThai INT
 
-SELECT MaNV, TenNV, ChucVu FROM NhanVien
+SELECT * FROM HoaDonThanhToan
+
+exec NhanVien_INSERT
+    @TenNV = N'Nguyễn Văn A',
+    @GioiTinh = N'Nam',
+    @SDT = '0912345678',
+    @ChucVu = N'Quản lý',
+    @TaiKhoan = 'nv001',
+    @MatKhau = '123456'
+
+
+	alter proc [dbo].[HoaDonThanhToan_INSERT]
+@MaNV int, @NgayLap datetime, @TongTien decimal(18,0), @GiamGia int, @ThanhToan decimal(18,0), @MaBan int
+as
+begin
+	SET NOCOUNT ON;
+
+	insert into HoaDonThanhToan(MaNV,NgayLap,TongTien,GiamGia,ThanhToan,MaBan) 
+	values (@MaNV,@NgayLap,@TongTien,@GiamGia,@ThanhToan,@MaBan)
+
+    SELECT SCOPE_IDENTITY() as MaHD
+end
+go
+
+alter proc [dbo].[ChiTietHoaDon_INSERT]
+@MaHD int, @MaMon int, @SoLuong int, @DonGia decimal(18,0), @ThanhTien decimal(18,0)
+as
+begin
+	SET NOCOUNT ON;
+
+	if not exists (select MaHD from ChiTietHoaDon where MaHD=@MaHD and MaMon=@MaMon)
+	begin
+		insert into ChiTietHoaDon(MaHD,MaMon, SoLuong, DonGia, ThanhTien) values (@MaHD,@MaMon,@SoLuong,@DonGia,@ThanhTien)
+	end
+end
+go

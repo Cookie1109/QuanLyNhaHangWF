@@ -22,10 +22,10 @@ namespace QuanLyNhaHang
         private List<MonAn> _dsMonAnGocTheoLoai;
         private List<Ban> _dsBan;
         private Ban _banDangChon;
-        private BindingList<MonAnHoaDon> _dsMonAnTrongHoaDon; // Dùng BindingList để tự động cập nhật UI
-        private Button _btnBanDaChon; // nút bàn đang được chọn trên UI
+        private BindingList<MonAnHoaDon> _dsMonAnTrongHoaDon; 
+        private Button _btnBanDaChon; 
 
-        private System.Windows.Forms.Timer _searchTimer; // Timer cho debounce tìm kiếm
+        private System.Windows.Forms.Timer _searchTimer; 
         public MainForm()
         {
             InitializeComponent();
